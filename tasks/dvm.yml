@@ -1,0 +1,41 @@
+---
+# file: roles/fubarhouse.dvm/tasks/dvm.yml
+
+- name: DVM | Check
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  stat:
+    path: "/usr/local/bin/dvm"
+  register: dvm_result
+
+- name: "DVM | Verifying file system"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ dvm_dir }}"
+    mode: 0777
+    group: "{{ ansible_ssh_user }}"
+    owner: "{{ ansible_ssh_user }}"
+    state: directory
+
+- name: DVM | Git
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  git:
+    repo: https://github.com/fubarhouse/dvm
+    dest: "{{ dvm_dir }}"
+    clone: yes
+    update: yes
+    version: master
+
+- name: DVM | Install
+  sudo: yes
+  sudo_user: root
+  file:
+    src: "{{ dvm_location }}"
+    dest: "/usr/local/bin/dvm"
+    owner: root
+    group: root
+    mode: 0777
+    state: link
+    force: yes

@@ -1,0 +1,5 @@
+---
+
+# locations
+dvm_dir: "/usr/lib/dvm"
+dvm_location: "{{ dvm_dir }}/dvm"
