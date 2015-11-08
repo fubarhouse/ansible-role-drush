@@ -39,3 +39,13 @@
     mode: 0777
     state: link
     force: yes
+
+- name: "DVM | Ensure {{ dvm_drush_version }} is installed"
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  raw: "{{ dvm_location }} install {{ dvm_drush_version }}"
+
+- name: "DVM | Ensure {{ dvm_drush_version }} is being used"
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  raw: "{{ dvm_location }} use {{ dvm_drush_version }}"

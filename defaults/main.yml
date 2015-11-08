@@ -3,3 +3,4 @@
 # locations
 dvm_dir: "/usr/lib/dvm"
 dvm_location: "{{ dvm_dir }}/dvm"
+dvm_drush_version: 7.0.0-rc1
