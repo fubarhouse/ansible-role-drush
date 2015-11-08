@@ -10,10 +10,17 @@ Requires `composer` to be installed on the server.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-```
-dvm_dir: "/usr/lib/dvm"
-dvm_location: "{{ dvm_dir }}/dvm"
-```
+Change installation directory which will contain the git repository
+
+    dvm_dir: "/usr/lib/dvm"
+
+Location to the executable file which is constructed from the `{{ dvm_dir }}` variable above.
+
+    dvm_location: "{{ dvm_dir }}/dvm"
+
+Version which this role which automatically ensure is installed and being used by default.
+
+    dvm_drush_version: 7.0.0-rc1
 
 ## Dependencies
 
