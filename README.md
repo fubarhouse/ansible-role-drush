@@ -22,6 +22,20 @@ Version which this role which automatically ensure is installed and being used b
 
     dvm_drush_version: 7.0.0-rc1
 
+Do you want to install any Drush modules?
+
+    dvm_install_packages: true
+
+If so, then install the following:
+
+    dvm_packages:
+      - acquia_purge
+      - delete_all
+      - drush_extras
+      - drush_sql_extras
+      - registry_rebuild
+
+
 ## Dependencies
 
   none
