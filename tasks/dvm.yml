@@ -40,12 +40,27 @@
     state: link
     force: yes
 
-- name: "DVM | Ensure {{ dvm_drush_version }} is installed"
+- name: "DVM | Run initializer"
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  raw: "{{ dvm_location }} initialize"
+
+- name: "DVM | Ensure DVM has installed Drush"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   raw: "{{ dvm_location }} install {{ dvm_drush_version }}"
 
-- name: "DVM | Ensure {{ dvm_drush_version }} is being used"
+- name: "DVM | Ensure DVM is using Drush"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   raw: "{{ dvm_location }} use {{ dvm_drush_version }}"
+
+- name: DVM | Install packages
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
+  shell: dvm pkg install {{ item }}
+  with_items:
+    - "{{ dvm_packages }}"
+  tags:
+    - drush
+  when: dvm_install_packages == true
