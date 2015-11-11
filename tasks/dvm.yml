@@ -8,7 +8,7 @@
     path: "/usr/local/bin/dvm"
   register: dvm_result
 
-- name: "DVM | Verifying file system"
+- name: "DVM | Ensure directory exists"
   become: yes
   become_user: root
   file:
