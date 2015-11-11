@@ -12,7 +12,7 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Change installation directory which will contain the git repository
 
-    dvm_dir: "/usr/lib/dvm"
+    dvm_dir: "/home/{{ ansible_ssh_user }}/.dvm"
 
 Location to the executable file which is constructed from the `{{ dvm_dir }}` variable above.
 
@@ -20,7 +20,7 @@ Location to the executable file which is constructed from the `{{ dvm_dir }}` va
 
 Version which this role which automatically ensure is installed and being used by default.
 
-    dvm_drush_version: 7.0.0-rc1
+    dvm_drush_version: 8.0.0-rc3
 
 Do you want to install any Drush modules?
 
@@ -29,12 +29,9 @@ Do you want to install any Drush modules?
 If so, then install the following:
 
     dvm_packages:
-      - acquia_purge
-      - delete_all
       - drush_extras
       - drush_sql_extras
       - registry_rebuild
-
 
 ## Dependencies
 
