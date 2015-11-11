@@ -12,8 +12,6 @@ dvm_install_packages: true
 
 # packages to install
 dvm_packages:
-  - acquia_purge
-  - delete_all
   - drush_extras
   - drush_sql_extras
   - registry_rebuild
