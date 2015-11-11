@@ -28,18 +28,6 @@
     update: yes
     version: master
 
-- name: DVM | Install
-  sudo: yes
-  sudo_user: root
-  file:
-    src: "{{ dvm_location }}"
-    dest: "/usr/local/bin/dvm"
-    owner: root
-    group: root
-    mode: 0777
-    state: link
-    force: yes
-
 - name: "DVM | Run initializer"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
