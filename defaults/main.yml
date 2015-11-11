@@ -1,7 +1,7 @@
 ---
 
 # locations
-dvm_dir: "/usr/lib/dvm"
+dvm_dir: "/home/{{ ansible_ssh_user }}/.dvm"
 dvm_location: "{{ dvm_dir }}/dvm"
 
 # version
