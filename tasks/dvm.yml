@@ -26,7 +26,7 @@
     dest: "{{ dvm_dir }}"
     clone: yes
     update: yes
-    version: master
+    version: 1.0
 
 - name: DVM | Link access (1/2)
   sudo: yes
