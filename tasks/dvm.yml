@@ -7,6 +7,9 @@
   stat:
     path: "/usr/local/bin/dvm"
   register: dvm_result
+  tags:
+    - drush
+    - dvm
 
 - name: "DVM | Verifying file system"
   become: yes
@@ -17,6 +20,9 @@
     group: "{{ ansible_ssh_user }}"
     owner: "{{ ansible_ssh_user }}"
     state: directory
+  tags:
+    - drush
+    - dvm
 
 - name: DVM | Git
   become: yes
@@ -27,6 +33,9 @@
     clone: yes
     update: yes
     version: 1.4
+  tags:
+    - drush
+    - dvm
 
 - name: DVM | Symlinking DVM
   sudo: yes
@@ -39,6 +48,9 @@
     mode: 0777
     state: link
     force: yes
+  tags:
+    - drush
+    - dvm
 
 - name: DVM | Symlinking Drush
   sudo: yes
@@ -51,21 +63,33 @@
     mode: 0777
     state: link
     force: yes
+  tags:
+    - drush
+    - dvm
 
 - name: "DVM | Run initializer"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   raw: "{{ dvm_location }} initialize"
+  tags:
+    - drush
+    - dvm
 
 - name: "DVM | Ensure DVM has installed Drush"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   raw: "{{ dvm_location }} install {{ dvm_drush_version }}"
+  tags:
+    - drush
+    - dvm
 
 - name: "DVM | Ensure DVM is using Drush"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   raw: "{{ dvm_location }} use {{ dvm_drush_version }}"
+  tags:
+    - drush
+    - dvm
 
 - name: DVM | Install packages
   become: yes
@@ -75,4 +99,5 @@
     - "{{ dvm_packages }}"
   tags:
     - drush
+    - dvm
   when: dvm_install_packages == true
