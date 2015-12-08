@@ -28,7 +28,7 @@
     update: yes
     version: 1.4
 
-- name: DVM | Link access (1/2)
+- name: DVM | Symlinking DVM
   sudo: yes
   sudo_user: root
   file:
@@ -40,7 +40,7 @@
     state: link
     force: yes
 
-- name: DVM | Link access (2/2)
+- name: DVM | Symlinking Drush
   sudo: yes
   sudo_user: root
   file:
