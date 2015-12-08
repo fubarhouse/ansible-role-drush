@@ -10,7 +10,8 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - all
-  - name: Debian
+  - name:
+    - Debian
     versions:
     - all
   categories:
