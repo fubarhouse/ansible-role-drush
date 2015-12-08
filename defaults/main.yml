@@ -6,6 +6,7 @@ dvm_location: "{{ dvm_dir }}/dvm"
 
 # version
 dvm_drush_version: 8.0.1
+dvm_drush_update: false
 
 # install packages?
 dvm_install_packages: true
