@@ -5,7 +5,7 @@ dvm_dir: "/home/{{ ansible_ssh_user }}/.dvm"
 dvm_location: "{{ dvm_dir }}/dvm"
 
 # version
-dvm_drush_version: 8.0.0-rc3
+dvm_drush_version: 8.0.1
 
 # install packages?
 dvm_install_packages: true
