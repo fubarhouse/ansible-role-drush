@@ -32,7 +32,7 @@
     dest: "{{ dvm_dir }}"
     clone: yes
     update: yes
-    version: 1.4
+    version: master
   tags:
     - drush
     - dvm
