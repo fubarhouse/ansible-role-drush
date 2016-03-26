@@ -1,18 +1,26 @@
 ---
 
-# locations
-dvm_dir: "/home/{{ ansible_ssh_user }}/.dvm"
-dvm_location: "{{ dvm_dir }}/dvm"
-
-# version
-dvm_drush_version: 8.0.1
-dvm_drush_update: false
-
-# install packages?
-dvm_install_packages: true
-
-# packages to install
-dvm_packages:
-  - drush_extras
-  - drush_sql_extras
-  - registry_rebuild
+fubarhouse_dvm:
+  # Clean install
+  clean_install: false
+  # Process controls
+  install_dvm: true
+  dvm_drush_update: false
+  dvm_install_packages: true
+  # Repositories
+  dvm_repo: "https://github.com/fubarhouse/dvm"
+  # Symlinks
+  dvm_symlink: "/usr/local/bin/dvm"
+  drush_symlink: "/usr/local/bin/drush"
+  # Install directories
+  dvm_dir: "~/.dvm"
+  # Install paths
+  # Executables
+  dvm_exec: "dvm"
+  # Application versions
+  dvm_drush_version: 7.1.0
+  # Packages
+  packages:
+    - drush_extras
+    - drush_sql_extras
+    - registry_rebuild

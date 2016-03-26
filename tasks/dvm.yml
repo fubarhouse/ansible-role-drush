@@ -1,114 +1,130 @@
 ---
 # file: roles/fubarhouse.dvm/tasks/dvm.yml
 
+- name: "DVM | Clean-up (1/3)"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ fubarhouse_dvm.dvm_dir }}"
+    state: absent
+  when: fubarhouse_dvm.clean_install
+
+- name: "DVM | Clean-up (2/3)"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ fubarhouse_dvm.dvm_symlink }}"
+    state: absent
+  when: fubarhouse_dvm.clean_install
+
+- name: "DVM | Clean-up (3/3)"
+  become: yes
+  become_user: root
+  file:
+    path: "{{ fubarhouse_dvm.drush_symlink }}"
+    state: absent
+  when: fubarhouse_dvm.clean_install
+
 - name: DVM | Check
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   stat:
-    path: "/usr/local/bin/dvm"
-  register: dvm_result
+    path: "{{ fubarhouse_dvm.dvm_dir }}"
+  register: fubarhouse_dvm_dvm_result
   tags:
     - drush
     - dvm
-
-- name: "DVM | Verifying file system"
-  become: yes
-  become_user: root
-  file:
-    path: "{{ dvm_dir }}"
-    mode: 0777
-    group: "{{ ansible_ssh_user }}"
-    owner: "{{ ansible_ssh_user }}"
-    state: directory
-  tags:
-    - drush
-    - dvm
+  when: fubarhouse_dvm.install_dvm
 
 - name: DVM | Git
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   git:
-    repo: https://github.com/fubarhouse/dvm
-    dest: "{{ dvm_dir }}"
+    repo: "{{ fubarhouse_dvm.dvm_repo }}"
+    dest: "{{ fubarhouse_dvm.dvm_dir }}"
     clone: yes
     update: yes
     version: master
   tags:
     - drush
     - dvm
+  when: fubarhouse_dvm.install_dvm
 
 - name: DVM | Symlinking DVM
-  sudo: yes
-  sudo_user: root
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
   file:
-    src: "{{ dvm_location }}"
-    dest: "/usr/local/bin/dvm"
-    owner: root
-    group: root
+    src: "{{ fubarhouse_dvm.dvm_dir }}/dvm"
+    dest: "{{ fubarhouse_dvm.dvm_symlink }}"
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
     mode: 0777
     state: link
     force: yes
   tags:
     - drush
     - dvm
+  when: fubarhouse_dvm.install_dvm
 
 - name: DVM | Symlinking Drush
-  sudo: yes
-  sudo_user: root
+  become: yes
+  become_user: "{{ ansible_ssh_user }}"
   file:
-    src: "{{ dvm_dir }}/drush"
-    dest: "/usr/local/bin/drush"
-    owner: root
-    group: root
+    src: "{{ fubarhouse_dvm.dvm_dir }}/drush"
+    dest: "{{ fubarhouse_dvm.drush_symlink }}"
+    owner: "{{ ansible_ssh_user }}"
+    group: "{{ ansible_ssh_user }}"
     mode: 0777
     state: link
     force: yes
   tags:
     - drush
     - dvm
+  when: fubarhouse_dvm.install_dvm
 
-- name: "DVM | Run initializer"
+- name: "DVM | Initializing"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  raw: "{{ dvm_location }} initialize"
+  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} initialize"
   tags:
     - drush
     - dvm
+  when: fubarhouse_dvm.install_dvm
 
-- name: "DVM | Update/Install Drush"
+- name: "DVM | Update Drush"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  raw: "{{ dvm_location }} update"
+  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} update"
   tags:
     - drush
     - dvm
-  when: dvm_drush_update == true
+  when: fubarhouse_dvm.dvm_drush_update
 
-- name: "DVM | Ensure DVM has installed Drush"
+- name: "DVM | Installed Drush"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  raw: "{{ dvm_location }} install {{ dvm_drush_version }}"
+  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} install {{ fubarhouse_dvm.dvm_drush_version }}"
   tags:
     - drush
     - dvm
-  when: dvm_drush_update != true
+  when: fubarhouse_dvm.dvm_drush_update != true
 
 - name: "DVM | Ensure DVM is using Drush"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  raw: "{{ dvm_location }} use {{ dvm_drush_version }}"
+  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} use {{ fubarhouse_dvm.dvm_drush_version }}"
   tags:
     - drush
     - dvm
-  when: dvm_drush_update != true
+  when: fubarhouse_dvm.dvm_drush_update != true
 
 - name: DVM | Install packages
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  shell: dvm pkg install {{ item }}
+  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} pkg install {{ item }}"
   with_items:
-    - "{{ dvm_packages }}"
+    - "{{ fubarhouse_dvm.packages }}"
   tags:
     - drush
     - dvm
-  when: dvm_install_packages == true
+  when: fubarhouse_dvm.dvm_install_packages

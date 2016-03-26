@@ -1,47 +1,65 @@
 # Ansible Role: DVM
 
-Installs Drush Version Manager on Debian/Ubuntu servers.
+  Installs Drush Version Manager on Debian/Ubuntu servers.
 
 ## Requirements
 
-Requires `composer` to be installed on the server.
+  None.
 
 ## Role Variables
 
-Available variables are listed below, along with default values (see `defaults/main.yml`):
+  Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-Change installation directory which will contain the git repository
+  ### Clean install
+  ````
+  clean_install: true
+  ````
+  ### Process controls
+  ````
+  install_dvm: true
+  dvm_drush_update: false
+  dvm_install_packages: true
+  ````
+  ### Repositories
+  ````
+  dvm_repo: "https://github.com/fubarhouse/dvm"
+  ````
+  ### Symlinks
+  ````
+  dvm_symlink: "/usr/local/bin/dvm"
+  drush_symlink: "/usr/local/bin/drush"
+  ````
+  ### Install directories
+  ````
+  dvm_dir: "~/.dvm"
+  ````
+  ### Install paths
+  ### Executables
+  ````
+  dvm_exec: "dvm"
+  ````
+  ### Application versions
+  ````
+  dvm_drush_version: 7.1.0
+  ````
+  ### Packages
+  ````
+  packages:
+    - drush_extras
+    - drush_sql_extras
+    - registry_rebuild
+  ````
 
-    dvm_dir: "/home/{{ ansible_ssh_user }}/.dvm"
-
-Location to the executable file which is constructed from the `{{ dvm_dir }}` variable above.
-
-    dvm_location: "{{ dvm_dir }}/dvm"
-
-Version which this role which automatically ensure is installed and being used by default.
-
-    dvm_drush_version: 8.0.0-rc3
-
-Do you want to install any Drush modules?
-
-    dvm_install_packages: true
-
-If so, then install the following:
-
-    dvm_packages:
-      - drush_extras
-      - drush_sql_extras
-      - registry_rebuild
 
 ## Dependencies
 
-  none
+  None.
 
 ## Example Playbook
 
-```
-  - { role: fubarhouse.dvm, when: '"dvm" in installed_extras' }
-```
+  ```
+    - { role: fubarhouse.dvm, when: '"dvm" in installed_extras' }
+  ```
 
 ## Installation
 
@@ -55,3 +73,5 @@ MIT / BSD
 ## Author Information
 
 This role was created in 2015 by [Karl Hepworth](https://twitter.com/fubarhouse).
+
+This role was redeveloped in 2016 by [Karl Hepworth](https://twitter.com/fubarhouse).
