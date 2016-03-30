@@ -52,7 +52,7 @@
 
 - name: DVM | Symlinking DVM
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
+  become_user: "root"
   file:
     src: "{{ fubarhouse_dvm.dvm_dir }}/dvm"
     dest: "{{ fubarhouse_dvm.dvm_symlink }}"
@@ -68,7 +68,7 @@
 
 - name: DVM | Symlinking Drush
   become: yes
-  become_user: "{{ ansible_ssh_user }}"
+  become_user: "root"
   file:
     src: "{{ fubarhouse_dvm.dvm_dir }}/drush"
     dest: "{{ fubarhouse_dvm.drush_symlink }}"

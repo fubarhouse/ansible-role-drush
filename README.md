@@ -8,48 +8,35 @@
 
 ## Role Variables
 
-  Available variables are listed below, along with default values (see `defaults/main.yml`):
+  Copy the defaults/main.yml into the ansible system and add to the playbook, and change the variables accordingly.
 
-  ### Clean install
   ````
-  clean_install: true
-  ````
-  ### Process controls
-  ````
+  fubarhouse_dvm:
+  # Clean install
+  clean_install: false
+  # Process controls
   install_dvm: true
   dvm_drush_update: false
   dvm_install_packages: true
-  ````
-  ### Repositories
-  ````
+  # Repositories
   dvm_repo: "https://github.com/fubarhouse/dvm"
-  ````
-  ### Symlinks
-  ````
+  # Symlinks
   dvm_symlink: "/usr/local/bin/dvm"
   drush_symlink: "/usr/local/bin/drush"
-  ````
-  ### Install directories
-  ````
+  # Install directories
   dvm_dir: "~/.dvm"
-  ````
-  ### Install paths
-  ### Executables
-  ````
+  # Install paths
+  # Executables
   dvm_exec: "dvm"
-  ````
-  ### Application versions
-  ````
+  # Application versions
   dvm_drush_version: 7.1.0
-  ````
-  ### Packages
-  ````
+  # Packages
   packages:
     - drush_extras
     - drush_sql_extras
     - registry_rebuild
-  ````
 
+  ````
 
 ## Dependencies
 
