@@ -11,7 +11,10 @@
   Copy the defaults/main.yml into the ansible system and add to the playbook, and change the variables accordingly.
 
   ````
+
   fubarhouse_dvm:
+  # Application versions
+  dvm_drush_version: 7.1.0
   # Clean install
   clean_install: false
   # Process controls
@@ -21,15 +24,13 @@
   # Repositories
   dvm_repo: "https://github.com/fubarhouse/dvm"
   # Symlinks
-  dvm_symlink: "/usr/local/bin/dvm"
-  drush_symlink: "/usr/local/bin/drush"
+  dvm_symlink: "/usr/bin/dvm"
+  drush_symlink: "/usr/bin/drush"
   # Install directories
-  dvm_dir: "~/.dvm"
+  dvm_dir: "/home/{{ ansible_ssh_user }}/.dvm"
   # Install paths
   # Executables
   dvm_exec: "dvm"
-  # Application versions
-  dvm_drush_version: 7.1.0
   # Packages
   packages:
     - drush_extras
