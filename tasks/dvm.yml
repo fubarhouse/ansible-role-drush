@@ -91,7 +91,7 @@
     - dvm
   when: fubarhouse_dvm.install_dvm
 
-- name: "DVM | Update Drush"
+- name: "DVM | Update"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} update"
@@ -100,10 +100,11 @@
     - dvm
   when: fubarhouse_dvm.dvm_drush_update
 
-- name: "DVM | Installed Drush"
+- name: "DVM | Install Drush"
   become: yes
   become_user: "{{ ansible_ssh_user }}"
-  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} install {{ fubarhouse_dvm.dvm_drush_version }}"
+  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} install {{ item }}"
+  with_items: "{{ fubarhouse_dvm.installed_versions }}"
   tags:
     - drush
     - dvm

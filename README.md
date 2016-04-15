@@ -12,9 +12,13 @@
 
   ````
 
-  fubarhouse_dvm:
+fubarhouse_dvm:
   # Application versions
-  dvm_drush_version: 7.1.0
+  dvm_drush_version: 7
+  installed_versions:
+    - 6
+    - 7
+    - 8
   # Clean install
   clean_install: false
   # Process controls
