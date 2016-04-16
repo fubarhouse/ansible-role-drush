@@ -15,7 +15,8 @@
 fubarhouse_dvm:
   # Application versions
   dvm_drush_version: 7
-  installed_versions:
+  # Application versions (non-default)
+  all_drush_versions:
     - 6
     - 7
     - 8

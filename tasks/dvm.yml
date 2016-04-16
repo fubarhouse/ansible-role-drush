@@ -104,7 +104,7 @@
   become: yes
   become_user: "{{ ansible_ssh_user }}"
   shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} install {{ item }}"
-  with_items: "{{ fubarhouse_dvm.installed_versions }}"
+  with_items: "{{ fubarhouse_dvm.all_drush_versions }}"
   tags:
     - drush
     - dvm
