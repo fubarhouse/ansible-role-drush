@@ -11,36 +11,42 @@
   Copy the defaults/main.yml into the ansible system and add to the playbook, and change the variables accordingly.
 
   ````
-
-fubarhouse_dvm:
-  # Application versions
-  dvm_drush_version: 7
-  # Application versions (non-default)
-  all_drush_versions:
-    - 6
-    - 7
-    - 8
-  # Clean install
-  clean_install: false
-  # Process controls
-  install_dvm: true
-  dvm_drush_update: false
-  dvm_install_packages: true
-  # Repositories
-  dvm_repo: "https://github.com/fubarhouse/dvm"
-  # Symlinks
-  dvm_symlink: "/usr/bin/dvm"
-  drush_symlink: "/usr/bin/drush"
-  # Install directories
-  dvm_dir: "/home/{{ ansible_ssh_user }}/.dvm"
-  # Install paths
-  # Executables
-  dvm_exec: "dvm"
-  # Packages
-  packages:
-    - drush_extras
-    - drush_sql_extras
-    - registry_rebuild
+    fubarhouse_dvm:
+      # User
+      user: "{{ ansible_user_id }}"
+      # Application versions
+      dvm_drush_version: 7
+      # Application versions (non-default)
+      all_drush_versions:
+        - 6
+        - 7
+        - 8
+      # Clean install
+      clean_install: false
+      # Process controls
+      install_dvm: true
+      dvm_drush_update: false
+      dvm_install_packages: true
+      # Repositories
+      dvm_repo: "https://github.com/fubarhouse/dvm"
+      # Install directories
+      dvm_dir: "/home/{{ ansible_user_id }}/.dvm"
+      # Symlinks
+      symlinks:
+        - name: dvm
+          src: "/home/{{ ansible_user_id }}/.dvm/dvm"
+          dest: "/usr/local/bin/dvm"
+        - name: drush
+          src: "/home/{{ ansible_user_id }}/.dvm/drush"
+          dest: "/usr/local/bin/drush"
+      # Install paths
+      # Executables
+      dvm_exec: "dvm"
+      # Packages
+      packages:
+        - drush_extras
+        - drush_sql_extras
+        - registry_rebuild
 
   ````
 
