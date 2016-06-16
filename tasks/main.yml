@@ -1,4 +1,7 @@
 ---
 # file: roles/fubarhouse.dvm/tasks/main.yml
 
+- name: Include OS-specific variables.
+  include_vars: "config-{{ ansible_os_family }}.yml"
+
 - include: dvm.yml

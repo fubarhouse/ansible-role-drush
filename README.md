@@ -1,6 +1,6 @@
 # Ansible Role: DVM
 
-  Installs Drush Version Manager on Debian/Ubuntu servers.
+  Installs Drush Version Manager on Debian and Darwin servers.
 
 ## Requirements
 

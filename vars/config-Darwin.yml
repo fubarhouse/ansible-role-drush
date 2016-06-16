@@ -1,6 +1,8 @@
 ---
 
 fubarhouse_dvm:
+  # User
+  user: "{{ ansible_user_id }}"
   # Application versions
   dvm_drush_version: 7
   # Application versions (non-default)
@@ -16,11 +18,16 @@ fubarhouse_dvm:
   dvm_install_packages: true
   # Repositories
   dvm_repo: "https://github.com/fubarhouse/dvm"
-  # Symlinks
-  dvm_symlink: "/usr/bin/dvm"
-  drush_symlink: "/usr/bin/drush"
   # Install directories
-  dvm_dir: "/home/{{ ansible_ssh_user }}/.dvm"
+  dvm_dir: "/Users/{{ ansible_user_id }}/.dvm"
+  # Symlinks
+  symlinks:
+    - name: dvm
+      src: "/Users/{{ ansible_user_id }}/.dvm/dvm"
+      dest: "/usr/local/bin/dvm"
+    - name: drush
+      src: "/Users/{{ ansible_user_id }}/.dvm/drush"
+      dest: "/usr/local/bin/drush"
   # Install paths
   # Executables
   dvm_exec: "dvm"
