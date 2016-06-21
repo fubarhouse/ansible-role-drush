@@ -22,7 +22,7 @@
 
 - name: DVM | Check
   become: yes
-  become_user: "{{ fubarhouse_dvm.user }}"
+  become_user: "{{ fubarhouse_user }}"
   stat:
     path: "{{ fubarhouse_dvm.dvm_dir }}"
   register: fubarhouse_dvm_dvm_result
@@ -32,11 +32,10 @@
   when: "{{ fubarhouse_dvm.install_dvm }} == true"
 
 - name: DVM | Git
-  become: yes
-  become_user: "{{ fubarhouse_dvm.user }}"
   git:
     repo: "{{ fubarhouse_dvm.dvm_repo }}"
     dest: "{{ fubarhouse_dvm.dvm_dir }}"
+    force: yes
     clone: yes
     update: yes
     version: master
@@ -46,8 +45,6 @@
   when: "{{ fubarhouse_dvm.install_dvm }} == true"
 
 - name: "DVM | Initializing"
-  become: yes
-  become_user: "{{ fubarhouse_dvm.user }}"
   shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} initialize"
   tags:
     - drush
@@ -56,27 +53,40 @@
 
 - name: "DVM | Update"
   become: yes
-  become_user: "{{ fubarhouse_dvm.user }}"
+  become_user: "{{ fubarhouse_user }}"
   shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} update"
   tags:
     - drush
     - dvm
   when: "{{ fubarhouse_dvm.dvm_drush_update }} == true"
 
-- name: "DVM | Install Drush"
+- name: "DVM | Looking for Drush"
   become: yes
-  become_user: "{{ fubarhouse_dvm.user }}"
-  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} install {{ item }}"
-  with_items: "{{ fubarhouse_dvm.all_drush_versions }}"
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} ls"
   tags:
     - drush
     - dvm
-  when: "{{ fubarhouse_dvm.dvm_drush_update }} != true"
+  register: dvm_installed_versions
+
+- debug: msg="{{ dvm_installed_versions.stdout }}"
+
+- name: "DVM | Install Drush"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell:  "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }}  install {{ item }}"
+  tags:
+    - drush
+    - dvm
+  when: item not in dvm_installed_versions.stdout
+  with_items: "{{ drush_versions }}"
 
 - name: "DVM | Ensure DVM is using Drush"
   become: yes
-  become_user: "{{ fubarhouse_dvm.user }}"
-  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} use {{ fubarhouse_dvm.dvm_drush_version }}"
+  become_user: "{{ fubarhouse_user }}"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} use {{ drush_version }}"
   tags:
     - drush
     - dvm
@@ -84,10 +94,10 @@
 
 - name: DVM | Install packages
   become: yes
-  become_user: "{{ fubarhouse_dvm.user }}"
+  become_user: "{{ fubarhouse_user }}"
   shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} pkg install {{ item }}"
   with_items:
-    - "{{ fubarhouse_dvm.packages }}"
+    - "{{ drush_packages }}"
   tags:
     - drush
     - dvm
@@ -99,7 +109,7 @@
   file:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: "{{ fubarhouse_dvm.user }}"
+    owner: "{{ fubarhouse_user }}"
     mode: 0777
     state: link
     force: yes
