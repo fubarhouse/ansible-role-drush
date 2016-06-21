@@ -2,14 +2,8 @@
 
 fubarhouse_dvm:
   # User
-  user: "{{ ansible_user_id }}"
-  # Application versions
-  dvm_drush_version: 7
-  # Application versions (non-default)
-  all_drush_versions:
-    - 6
-    - 7
-    - 8
+  user: "{{ fubarhouse_user }}"
+  user_dir: "/Users/{{ fubarhouse_user }}"
   # Clean install
   clean_install: false
   # Process controls
@@ -19,20 +13,15 @@ fubarhouse_dvm:
   # Repositories
   dvm_repo: "https://github.com/fubarhouse/dvm"
   # Install directories
-  dvm_dir: "/Users/{{ ansible_user_id }}/.dvm"
+  dvm_dir: "/Users/{{ fubarhouse_user }}/.dvm"
   # Symlinks
   symlinks:
     - name: dvm
-      src: "/Users/{{ ansible_user_id }}/.dvm/dvm"
+      src: "/Users/{{ fubarhouse_user }}/.dvm/dvm"
       dest: "/usr/local/bin/dvm"
     - name: drush
-      src: "/Users/{{ ansible_user_id }}/.dvm/drush"
+      src: "/Users/{{ fubarhouse_user }}/.dvm/drush"
       dest: "/usr/local/bin/drush"
   # Install paths
   # Executables
   dvm_exec: "dvm"
-  # Packages
-  packages:
-    - drush_extras
-    - drush_sql_extras
-    - registry_rebuild
