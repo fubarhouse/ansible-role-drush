@@ -69,8 +69,6 @@
     - dvm
   register: dvm_installed_versions
 
-- debug: msg="{{ dvm_installed_versions.stdout }}"
-
 - name: "DVM | Install Drush"
   become: yes
   become_user: "{{ fubarhouse_user }}"
