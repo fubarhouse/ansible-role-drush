@@ -20,12 +20,14 @@
   when: "{{ fubarhouse_dvm.clean_install }} == true"
   with_items: "{{ fubarhouse_dvm.symlinks }}"
 
-- name: DVM | Check
+- name: DVM | Ensure folder is configured
   become: yes
-  become_user: "{{ fubarhouse_user }}"
-  stat:
+  become_user: "root"
+  file:
     path: "{{ fubarhouse_dvm.dvm_dir }}"
-  register: fubarhouse_dvm_dvm_result
+    owner: "{{ fubarhouse_user }}"
+    mode: 0755
+    state: directory
   tags:
     - drush
     - dvm
