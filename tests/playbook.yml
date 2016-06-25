@@ -6,7 +6,6 @@
     ansible_ssh_user: root
     drush_version: 6.2.2
     drush_versions: []
-    drush_packages:
-      - registry_rebuild
+    drush_packages: []
   roles:
     - { role: ../../fubarhouse.dvm }
