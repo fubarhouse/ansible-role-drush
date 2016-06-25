@@ -1,5 +1,7 @@
 # Ansible Role: DVM
 
+[![Build Status](https://travis-ci.org/fubarhouse/fubarhouse.dvm.svg?branch=master)](https://travis-ci.org/fubarhouse/fubarhouse.dvm)
+
 * Installs DVM (Drush Version Manager)
 * Installs multiple versions of Drush
 * Sets a default Drush version
