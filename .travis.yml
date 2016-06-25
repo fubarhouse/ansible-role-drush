@@ -9,10 +9,10 @@ install:
   - pip install ansible
 
 script:
-  - git clone https://github.com/geerlingguy/ansible-role-git roles/geerlingguy.git
-  - git clone https://github.com/geerlingguy/ansible-role-php roles/geerlingguy.php
-  - git clone https://github.com/geerlingguy/ansible-role-composer roles/geerlingguy.composer
-  - git clone https://github.com/geerlingguy/ansible-role-drush roles/geerlingguy.drush
+  - git clone https://github.com/geerlingguy/ansible-role-git ../geerlingguy.git
+  - git clone https://github.com/geerlingguy/ansible-role-php ../geerlingguy.php
+  - git clone https://github.com/geerlingguy/ansible-role-composer ../geerlingguy.composer
+  - git clone https://github.com/geerlingguy/ansible-role-drush ../geerlingguy.drush
   - cd tests
   - ansible-playbook -i inventory playbook.yml --syntax-check
   - ansible-playbook -i inventory playbook.yml --sudo -vvvv
