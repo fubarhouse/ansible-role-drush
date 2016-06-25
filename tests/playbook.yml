@@ -8,4 +8,5 @@
     drush_versions: []
     drush_packages: []
   roles:
+    - { role: geerlingguy.drush }
     - { role: ../../fubarhouse.dvm }
