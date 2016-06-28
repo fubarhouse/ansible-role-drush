@@ -26,7 +26,8 @@
       - /etc/php5/cli/conf.d
     ansible_ssh_user: travis
     drush_version: 7.2.0
-    drush_versions: []
+    drush_versions:
+      - 7.2.0
     drush_packages: []
   roles:
     - { role: ../../geerlingguy.git }
