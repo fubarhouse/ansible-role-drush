@@ -71,6 +71,16 @@
     - dvm
   register: dvm_installed_versions
 
+- name: "DVM | Install default Drush"
+  become: yes
+  become_user: "{{ fubarhouse_user }}"
+  shell:  "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }}  install {{ item }}"
+  tags:
+    - drush
+    - dvm
+  when: item not in dvm_installed_versions.stdout
+  with_items: "'{{ drush_version }}' not in {{ drush_versions }}"
+
 - name: "DVM | Install Drush"
   become: yes
   become_user: "{{ fubarhouse_user }}"
