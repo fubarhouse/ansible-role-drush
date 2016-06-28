@@ -25,7 +25,7 @@
       - /etc/php5/apache2/conf.d
       - /etc/php5/cli/conf.d
     ansible_ssh_user: root
-    drush_version: 7.3.0
+    drush_version: 7.2.0
     drush_versions: []
     drush_packages: []
   roles:
