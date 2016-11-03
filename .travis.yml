@@ -10,9 +10,6 @@ install:
 
 script:
   - sudo apt-get install -y apache2
-  - git clone https://github.com/geerlingguy/ansible-role-git ../geerlingguy.git
-  - git clone https://github.com/geerlingguy/ansible-role-php ../geerlingguy.php
-  - git clone https://github.com/geerlingguy/ansible-role-composer ../geerlingguy.composer
   - cd tests
   - ansible-playbook -i inventory playbook.yml --syntax-check
   - ansible-playbook -i inventory playbook.yml --sudo -vvvv

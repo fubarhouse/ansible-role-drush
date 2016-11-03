@@ -1,15 +1,30 @@
 ---
 # file: roles/fubarhouse.dvm/tasks/main.yml
 
+- name: "Checking for PHP"
+  shell: which php
+  register: php_status
+  failed_when: false
+
+- name: "Checking for Composer"
+  shell: which composer
+  register: composer_status
+  failed_when: false
+
+- name: "Report fail when missing PHP or Composer"
+  fail:
+    msg: "PHP and/or Composer missing"
+  when: "'composer' not in composer_status.stdout or 'php' not in php_status.stdout"
+
 - name: "Define user variable for ssh user"
   set_fact:
     fubarhouse_user: "{{ ansible_ssh_user }}"
-  when: ansible_ssh_user is defined
+  when: ansible_ssh_user is defined and fubarhouse_user is undefined
 
 - name: "Define user variable for non-ssh user"
   set_fact:
     fubarhouse_user: "{{ ansible_user_id }}"
-  when: ansible_ssh_user is not defined
+  when: ansible_ssh_user is not defined and fubarhouse_user is undefined
 
 - name: "Define OS-specific variables"
   include_vars: "config-{{ ansible_os_family }}.yml"

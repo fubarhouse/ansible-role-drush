@@ -20,7 +20,7 @@
   when: "{{ fubarhouse_dvm.clean_install }} == true"
   with_items: "{{ fubarhouse_dvm.symlinks }}"
 
-- name: DVM | Ensure folder is configured
+- name: "DVM | Ensure folder is configured"
   become: yes
   become_user: "root"
   file:
@@ -33,7 +33,7 @@
     - dvm
   when: "{{ fubarhouse_dvm.install_dvm }} == true"
 
-- name: DVM | Git
+- name: "DVM | Git"
   git:
     repo: "{{ fubarhouse_dvm.dvm_repo }}"
     dest: "{{ fubarhouse_dvm.dvm_dir }}"
@@ -92,8 +92,6 @@
   with_items: "{{ drush_versions }}"
 
 - name: "DVM | Ensure DVM is using Drush"
-  become: yes
-  become_user: "{{ fubarhouse_user }}"
   become: yes
   become_user: "{{ fubarhouse_user }}"
   shell: "{{ fubarhouse_dvm.dvm_dir }}/{{ fubarhouse_dvm.dvm_exec }} use {{ drush_version }}"
