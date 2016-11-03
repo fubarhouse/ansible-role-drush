@@ -9,7 +9,8 @@ install:
   - pip install ansible
 
 script:
-  - sudo apt-get install -y apache2
+  - sudo apt-get install -y apache2 curl php5-cli git
+  - curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
   - cd tests
   - ansible-playbook -i inventory playbook.yml --syntax-check
   - ansible-playbook -i inventory playbook.yml --sudo -vvvv
