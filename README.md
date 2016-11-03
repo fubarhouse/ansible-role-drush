@@ -10,7 +10,9 @@
 ## Requirements
 
 * PHP
+* Pear
 * Composer
+* Unzip
 
 ## Role Variables
 
