@@ -40,7 +40,7 @@
     force: yes
     clone: yes
     update: yes
-    version: master
+    version: 1.0
   tags:
     - drush
     - dvm
